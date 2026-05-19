@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Gestión de E/S en Sistemas Operativos | Micrositio Educativo</title>
+    <!-- Google Fonts para tipografía moderna y legible -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome 6 (gratuito) para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- HERO -->
+        <div class="hero">
+            <h1><i class="fas fa-microchip"></i> Gestión de Entrada/Salida</h1>
+            <p>El puente entre el sistema operativo y los dispositivos físicos.<br>
+                Controladores, interrupciones, buffering, DMA y más.</p>
+            <div class="hero-badge"><i class="fas fa-graduation-cap"></i> Contenido basado en fundamentos de SO</div>
+        </div>
+
+        <!-- Navegación rápida interna -->
+        <div class="nav-cards">
+            <a href="#que-es" class="nav-btn"><i class="fas fa-question-circle"></i> ¿Qué es E/S?</a>
+            <a href="#funciones" class="nav-btn"><i class="fas fa-tachometer-alt"></i> Funciones clave</a>
+            <a href="#drivers" class="nav-btn"><i class="fas fa-usb"></i> Drivers & BIOS</a>
+            <a href="#estrategias" class="nav-btn"><i class="fas fa-random"></i> Estrategias</a>
+            <a href="#buffering" class="nav-btn"><i class="fas fa-database"></i> Buffering vs Caché</a>
+            <a href="#rendimiento" class="nav-btn"><i class="fas fa-chart-line"></i> Rendimiento</a>
+        </div>
+
+        <!-- SECCIÓN 1 - QUÉ ES E/S -->
+        <div id="que-es" class="section-card">
+            <div class="section-title">
+                <i class="fas fa-exchange-alt"></i>
+                <span>¿Qué es la gestión de E/S?</span>
+            </div>
+            <p class="intro-text">La gestión de Entrada/Salida (E/S) es la administración
+                que realiza el sistema operativo sobre los dispositivos periféricos: teclados, discos, impresoras,
+                pantallas, etc. Su objetivo es proporcionar una <strong>interfaz uniforme y eficiente</strong>
+                independientemente de la velocidad o características del hardware.</p>
+            <div class="grid-2cols">
+                <div class="info-box">
+                    <i class="fas fa-microphone-alt icon-large"></i>
+                    <h3>Entrada (Input)</h3>
+                    <p>Dispositivos que introducen datos al sistema: teclado, mouse, escáner, micrófono, cámara.</p>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-tv icon-large"></i>
+                    <h3>Salida (Output)</h3>
+                    <p>Dispositivos que muestran o reproducen información: monitor, impresora, altavoces.</p>
+                </div>
+            </div>
+            <div class="info-box info-box-note">
+                <p><i class="fas fa-info-circle"></i> <strong>Nota importante:</strong> No confundir con operaciones de
+                    E/S en programación (lectura/escritura de archivos, redes). La gestión de E/S del SO es a nivel de
+                    hardware y controladores.</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2 - FUNCIONES PRINCIPALES -->
+        <div id="funciones" class="section-card">
+            <div class="section-title">
+                <i class="fas fa-cogs"></i>
+                <span>Funciones principales de la gestión E/S</span>
+            </div>
+            <div class="grid-2cols">
+                <div class="info-box"><i class="fas fa-sitemap"></i>
+                    <h3>Control de dispositivos</h3>
+                    <p>Coordina acceso, evita conflictos y asigna prioridades mediante colas de solicitudes.</p>
+                </div>
+                <div class="info-box"><i class="fas fa-hourglass-half"></i>
+                    <h3>Buffering</h3>
+                    <p>Áreas de almacenamiento temporal que mejoran el rendimiento mientras el CPU ejecuta otras tareas.
+                    </p>
+                </div>
+                <div class="info-box"><i class="fas fa-print"></i>
+                    <h3>Spooling</h3>
+                    <p>Almacenamiento en disco de trabajos de salida (ej. impresión) para procesamiento en segundo
+                        plano.</p>
+                </div>
+                <div class="info-box"><i class="fas fa-bell"></i>
+                    <h3>Manejo de interrupciones</h3>
+                    <p>Los dispositivos notifican al SO cuando están listos o requieren atención.</p>
+                </div>
+                <div class="info-box"><i class="fas fa-exclamation-triangle"></i>
+                    <h3>Control de errores</h3>
+                    <p>Detección y manejo de fallos en operaciones de E/S, informando a las aplicaciones.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3 - DRIVERS Y BIOS -->
+        <div id="drivers" class="section-card">
+            <div class="section-title">
+                <i class="fas fa-plug"></i>
+                <span>Drivers (controladores) y rol de la BIOS</span>
+            </div>
+            <div class="grid-2cols">
+                <div class="info-box">
+                    <i class="fas fa-microchip"></i>
+                    <h3>Controladores / Drivers</h3>
+                    <p>Software que actúa como traductor entre el SO y un dispositivo específico. Cada hardware requiere
+                        su driver (impresora, gráfica, etc.). Mantenerlos actualizados garantiza compatibilidad y
+                        rendimiento.</p>
+                    <span class="badge-tech"><i class="fas fa-sync-alt"></i> Actualización clave</span>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-motherboard"></i>
+                    <h3>BIOS (Basic Input/Output System)</h3>
+                    <p>Interactúa con el hardware en el arranque (POST), pruebas iniciales y configuración básica. Una
+                        vez cargado el SO, la gestión completa de E/S pasa al sistema operativo y sus drivers.</p>
+                    <p class="highlight">La BIOS permite el inicio, pero no la gestión avanzada de E/S.</p>
+                </div>
+            </div>
+            <div class="security-box">
+                <i class="fas fa-shield-alt"></i> <strong>¿Restringir operaciones de E/S?</strong> Sí, mediante permisos
+                de usuario, políticas de seguridad, deshabilitación de puertos USB o firewalls.
+            </div>
+        </div>
+
+        <!-- SECCIÓN 4 - ESTRATEGIAS DE E/S + TÉCNICAS (Síncrona/Asíncrona, DMA, Interrupciones) -->
+        <div id="estrategias" class="section-card">
+            <div class="section-title">
+                <i class="fas fa-chart-simple"></i>
+                <span>Estrategias de gestión y técnicas de transferencia</span>
+            </div>
+            <h3 class="comp-title">Comparativa: E/S Síncrona vs Asíncrona</h3>
+            <div class="comparativa comp-container">
+                <div class="card-comp"><i class="fas fa-hourglass-start icon-huge"></i>
+                    <h4>Síncrona</h4>
+                    <p>El proceso espera hasta que la operación de E/S finaliza. Simple pero ineficiente si la E/S es
+                        lenta.</p>
+                </div>
+                <div class="card-comp"><i class="fas fa-forward icon-huge"></i>
+                    <h4>Asíncrona</h4>
+                    <p>El proceso continúa mientras la E/S ocurre en segundo plano. Mejor uso de CPU, ideal para tareas
+                        concurrentes.</p>
+                </div>
+            </div>
+
+            <h3 class="tech-title">Técnicas de programación de E/S</h3>
+            <table class="tech-table">
+                <thead>
+                    <tr>
+                        <th>Técnica</th>
+                        <th>Descripción</th>
+                        <th>Eficiencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Programada (Polling)</strong></td>
+                        <td>El CPU verifica constantemente el estado del dispositivo.</td>
+                        <td>Baja, desperdicia ciclos.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Por interrupciones</strong></td>
+                        <td>El dispositivo genera una interrupción al finalizar o necesitar atención.</td>
+                        <td>Alta, no desperdicia CPU innecesariamente.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DMA (Acceso Directo a Memoria)</strong></td>
+                        <td>El controlador DMA transfiere datos directamente a memoria sin intervención del CPU.</td>
+                        <td>Muy alta, libera al procesador por completo.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="info-box info-box-dma">
+                <i class="fas fa-tachometer-alt"></i> <strong>DMA en acción:</strong> El dispositivo solicita el bus, el
+                controlador DMA mueve los bloques de datos y notifica al CPU al terminar. Ideal para discos, tarjetas de
+                red y sonido.
+            </div>
+        </div>
+
+        <!-- SECCIÓN 5 - BUFFERING VS CACHÉ (Énfasis en PDF) -->
+        <div id="buffering" class="section-card">
+            <div class="section-title">
+                <i class="fas fa-memory"></i>
+                <span>Buffering y Caché: diferencias fundamentales</span>
+            </div>
+            <div class="grid-2cols">
+                <div class="info-box">
+                    <i class="fas fa-draw-polygon"></i>
+                    <h3>📦 Buffering</h3>
+                    <p>Área de almacenamiento temporal para igualar velocidades entre dispositivos y CPU. Usa memoria
+                        intermedia (buffer) para lectura/escritura asíncrona. Ejemplo: reproducción de video, impresión
+                        de documentos.</p>
+                    <p><strong>Ventajas:</strong> Mayor rendimiento, evita bloqueos.<br>
+                        <strong>Desventajas:</strong> Consumo de memoria, posible cuello de botella.
+                    </p>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-bolt"></i>
+                    <h3>⚡ Caché (Cache)</h3>
+                    <p>Memoria de alta velocidad que almacena datos <strong>frecuentemente utilizados</strong> para
+                        acceso ultra rápido. Se ubica entre CPU y memoria principal. Ejemplo: caché L1/L2, caché de
+                        disco.</p>
+                    <p><strong>Ventajas:</strong> Acelera aplicaciones, reduce tiempo de acceso.<br>
+                        <strong>Desventajas:</strong> Mayor costo, coherencia de datos compleja.
+                    </p>
+                </div>
+            </div>
+            <table class="tech-table table-spacing">
+                <tr>
+                    <th>Aspecto</th>
+                    <th>Buffering</th>
+                    <th>Caché</th>
+                </tr>
+                <tr>
+                    <td>Propósito</td>
+                    <td>Compensar diferencias de velocidad</td>
+                    <td>Acercar datos frecuentes al CPU</td>
+                </tr>
+                <tr>
+                    <td>Ubicación típica</td>
+                    <td>Memoria principal (buffer temporal)</td>
+                    <td>Memoria estática SRAM (dentro o cerca del CPU)</td>
+                </tr>
+                <tr>
+                    <td>Ejemplo cotidiano</td>
+                    <td>Buffer en impresora o streaming de video</td>
+                    <td>Navegador web que guarda imágenes locales</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SECCIÓN 6 - RENDIMIENTO Y DESAFÍOS -->
+        <div id="rendimiento" class="section-card">
+            <div class="section-title">
+                <i class="fas fa-chart-line"></i>
+                <span>Rendimiento, escalabilidad y confiabilidad</span>
+            </div>
+            <div class="grid-2cols">
+                <div class="info-box">
+                    <h3><i class="fas fa-stopwatch"></i> Tiempo de acceso</h3>
+                    <p>Latencia del dispositivo (ej. disco mecánico vs SSD). Afecta directamente la velocidad de
+                        operaciones.</p>
+                </div>
+                <div class="info-box">
+                    <h3><i class="fas fa-tachometer-alt"></i> Tasa de transferencia</h3>
+                    <p>Cantidad de datos por segundo. DMA y buses rápidos mejoran este factor.</p>
+                </div>
+                <div class="info-box">
+                    <h3><i class="fas fa-chart-pie"></i> Tamaño del buffer</h3>
+                    <p>Un buffer más grande reduce interrupciones, pero consume memoria. Balance crítico.</p>
+                </div>
+                <div class="info-box">
+                    <h3><i class="fas fa-shield-virus"></i> Confiabilidad</h3>
+                    <p>Manejo de errores, redundancia y protección de datos en transferencias críticas.</p>
+                </div>
+            </div>
+            <div class="info-box info-box-opt">
+                <i class="fas fa-lightbulb"></i> <strong>Estrategias de optimización:</strong> Organización de datos en
+                disco, planificación de E/S (colas con prioridad), uso de caché de disco y técnicas como el spooling.
+            </div>
+            <p class="exercise-text"><i class="fas fa-microphone-alt"></i> <strong>Ejercicio
+                    reflexivo:</strong> ¿Qué técnica usarías para un servidor web con miles de peticiones de archivos
+                estáticos? La combinación de caché en RAM + DMA + planificación justa mejora drásticamente el
+                rendimiento.</p>
+        </div>
+
+        <!-- SECCIÓN ADICIONAL: INTERRUPCIONES EN PROFUNDIDAD -->
+        <div class="section-card">
+            <div class="section-title">
+                <i class="fas fa-broadcast-tower"></i>
+                <span>Interrupciones de E/S y controladores</span>
+            </div>
+            <p>Las interrupciones son señales eléctricas o lógicas que detienen momentáneamente la ejecución del CPU
+                para atender un evento de hardware o software. Los pasos típicos:</p>
+            <ol class="interrupt-list">
+                <li>El dispositivo de E/S completa la operación y envía una interrupción.</li>
+                <li>El controlador notifica al procesador (IRQ).</li>
+                <li>El SO guarda el contexto del proceso actual.</li>
+                <li>Se ejecuta el manejador de interrupciones (ISR).</li>
+                <li>Se restaura el contexto y el proceso continúa.</li>
+            </ol>
+            <div class="grid-2cols grid-spacing">
+                <div class="info-box"><i class="fas fa-microchip"></i>
+                    <h3>Interrupción Hardware</h3>
+                    <p>Generada por un periférico (disco, teclado).</p>
+                </div>
+                <div class="info-box"><i class="fas fa-code"></i>
+                    <h3>Interrupción Software</h3>
+                    <p>Generada por una llamada al sistema o excepción.</p>
+                </div>
+            </div>
+            <p class="highlight highlight-spacing"><i class="fas fa-exchange-alt"></i> Los
+                controladores de dispositivo manejan estas interrupciones y traducen comandos genéricos del SO en
+                instrucciones específicas del hardware.</p>
+        </div>
+
+        <!-- CONCLUSIÓN / RECOMENDACIONES -->
+        <div class="section-card section-conclusion">
+            <div class="section-title">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>Conclusiones y próximos pasos</span>
+            </div>
+            <p class="conclusion-text">La gestión eficiente de E/S es fundamental para el rendimiento, la escalabilidad
+                y la seguridad de cualquier sistema operativo moderno. Entender conceptos como <strong>buffering, caché,
+                    DMA, interrupciones y planificación</strong> permite construir aplicaciones más rápidas y
+                confiables.</p>
+            <div class="conclusion-list">
+                <div><i class="fas fa-check-circle check-icon"></i> Optimización continua</div>
+                <div><i class="fas fa-check-circle check-icon"></i> Uso de DMA en sistemas de alto
+                    rendimiento</div>
+                <div><i class="fas fa-check-circle check-icon"></i> Mantenimiento de controladores
+                    actualizados</div>
+            </div>
+            <hr class="divider">
+            <p><i class="fas fa-globe"></i> <strong>Recursos gratuitos recomendados para implementar este
+                    sitio:</strong> WordPress.com, Google Sites o incluso esta misma página HTML5 que puede alojarse en
+                GitHub Pages. El diseño responsive permite ser visto en celulares, tablets y PCs.</p>
+            <div class="tech-badges-container">
+                <span class="badge-tech"><i class="fab fa-html5"></i> HTML5 semántico</span>
+                <span class="badge-tech"><i class="fab fa-css3-alt"></i> CSS Flex/Grid</span>
+                <span class="badge-tech"><i class="fas fa-universal-access"></i> Accesible</span>
+            </div>
+        </div>
+
+        <footer>
+            <i class="fas fa-laptop-code"></i> Contenido educativo basado en fundamentos de Sistemas Operativos —
+            Gestión de E/S, Drivers, DMA y Caché.<br>
+            Fuentes: Medium (Diego Coder) y material académico "Sistemas Operativos.pdf" | Diseño libre para
+            aprendizaje.
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
