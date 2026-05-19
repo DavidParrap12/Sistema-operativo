@@ -118,11 +118,10 @@
                 <span class="text-headline-md font-headline-md font-bold text-primary">I/O OS Management</span>
             </div>
             <div class="hidden lg:flex items-center gap-6">
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#intro">Estrategias</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#estrategias">Estrategias</a>
                 <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#buffering">Buffering</a>
                 <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#cache">Caché</a>
                 <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#recursos">Recursos</a>
-                <button class="bg-primary-container text-on-primary rounded-full px-6 py-2 font-label-md text-label-md scale-95 active:scale-90 transition-transform">Acceder</button>
             </div>
             <div class="flex items-center gap-4 md:hidden">
                 <span class="material-symbols-outlined cursor-pointer">menu</span>
@@ -156,19 +155,19 @@
     <section class="bg-surface py-8 border-b border-surface-container">
         <div class="max-w-container-max mx-auto px-margin-mobile overflow-x-auto">
             <div class="flex items-center gap-3 min-w-max pb-4">
-                <button class="flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-full font-label-md text-label-md">
+                <button data-href="#intro" class="flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-full font-label-md text-label-md hover:bg-primary-container transition-colors">
                     <span class="material-symbols-outlined text-sm">help</span> ¿Qué es E/S?
                 </button>
-                <button class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high px-5 py-2.5 rounded-full font-label-md text-label-md text-on-surface transition-colors">
+                <button data-href="#funciones" class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high px-5 py-2.5 rounded-full font-label-md text-label-md text-on-surface transition-colors">
                     <span class="material-symbols-outlined text-sm">settings</span> Funciones clave
                 </button>
-                <button class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high px-5 py-2.5 rounded-full font-label-md text-label-md text-on-surface transition-colors">
+                <button data-href="#drivers" class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high px-5 py-2.5 rounded-full font-label-md text-label-md text-on-surface transition-colors">
                     <span class="material-symbols-outlined text-sm">terminal</span> Drivers &amp; BIOS
                 </button>
-                <button class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high px-5 py-2.5 rounded-full font-label-md text-label-md text-on-surface transition-colors">
+                <button data-href="#estrategias" class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high px-5 py-2.5 rounded-full font-label-md text-label-md text-on-surface transition-colors">
                     <span class="material-symbols-outlined text-sm">strategy</span> Estrategias
                 </button>
-                <button class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high px-5 py-2.5 rounded-full font-label-md text-label-md text-on-surface transition-colors">
+                <button data-href="#recursos" class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high px-5 py-2.5 rounded-full font-label-md text-label-md text-on-surface transition-colors">
                     <span class="material-symbols-outlined text-sm">speed</span> Rendimiento
                 </button>
             </div>
@@ -201,7 +200,7 @@
         </section>
 
         <!-- Section: Functions -->
-        <section class="space-y-8">
+        <section class="space-y-8" id="funciones">
             <div class="section-anchor">
                 <h2 class="font-headline-lg text-headline-lg text-primary">Funciones principales</h2>
             </div>
@@ -246,7 +245,7 @@
         </section>
 
         <!-- Section: Drivers & BIOS -->
-        <section class="space-y-8">
+        <section class="space-y-8" id="drivers">
             <div class="section-anchor">
                 <h2 class="font-headline-lg text-headline-lg text-primary">Drivers y BIOS</h2>
                 <p class="text-on-surface-variant">La jerarquía de abstracción en el sistema operativo.</p>
@@ -282,7 +281,7 @@
         </section>
 
         <!-- Section: Estrategias & Table -->
-        <section class="space-y-12">
+        <section class="space-y-12" id="estrategias">
             <div class="section-anchor">
                 <h2 class="font-headline-lg text-headline-lg text-primary">Estrategias de Transferencia</h2>
             </div>
@@ -355,7 +354,7 @@
                         <li class="flex items-start gap-3"><span class="material-symbols-outlined text-green-600 text-[20px]">check_circle</span> Adaptación de anchos de banda.</li>
                     </ul>
                 </div>
-                <div class="edu-card bg-white p-10 flex flex-col items-center text-center">
+                <div id="cache" class="edu-card bg-white p-10 flex flex-col items-center text-center">
                     <div class="w-20 h-20 bg-tertiary-fixed rounded-full flex items-center justify-center mb-6">
                         <span class="material-symbols-outlined text-4xl text-on-tertiary-fixed" style="font-variation-settings: 'FILL' 1;">speed</span>
                     </div>
@@ -400,7 +399,7 @@
         </section>
 
         <!-- Section: Interrupciones -->
-        <section class="space-y-8">
+        <section class="space-y-8" id="interrupciones">
             <div class="section-anchor">
                 <h2 class="font-headline-lg text-headline-lg text-primary">Interrupciones</h2>
             </div>

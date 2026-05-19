@@ -25,22 +25,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Añadir data-href a los botones tipo píldora para que funcionen como enlaces
-    const pillButtons = document.querySelectorAll('section.bg-surface button');
-    const sections = ['#intro', '#intro', '#intro', '#intro', '#recursos']; // Aproximación
-    pillButtons.forEach((btn, idx) => {
-        if(sections[idx]) {
-           btn.setAttribute('data-href', sections[idx]);
-           btn.addEventListener('click', function() {
-               const targetElement = document.querySelector(this.dataset.href);
-               if (targetElement) {
-                   const headerOffset = 80;
-                   const elementPosition = targetElement.getBoundingClientRect().top;
-                   const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                   window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-               }
-           });
-        }
+    // Navegación con botones píldora usando atributos data-href
+    const pillButtons = document.querySelectorAll('button[data-href]');
+    pillButtons.forEach((btn) => {
+        btn.addEventListener('click', function() {
+            const targetElement = document.querySelector(this.dataset.href);
+            if (targetElement) {
+                const headerOffset = 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            }
+        });
     });
 
 
