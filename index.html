@@ -1,336 +1,486 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html class="light" lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Gestión de E/S en Sistemas Operativos | Micrositio Educativo</title>
-    <!-- Google Fonts para tipografía moderna y legible -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap"
-        rel="stylesheet">
-    <!-- Font Awesome 6 (gratuito) para iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Gestión de E/S - I/O OS Management</title>
+    
+    <!-- Fuentes e Iconos -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    
+    <!-- Tailwind CSS (CDN para prototipado rápido del diseño) -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#184b6b",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed": "#001e30",
+                    "background": "#faf9fa",
+                    "inverse-primary": "#adcadf",
+                    "surface-tint": "#466274",
+                    "on-primary-fixed": "#001e2d",
+                    "surface-container-high": "#e9e8e9",
+                    "surface-bright": "#faf9fa",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#005048",
+                    "inverse-surface": "#2f3032",
+                    "tertiary-fixed": "#8cf5e4",
+                    "surface-container": "#eeedef",
+                    "on-surface-variant": "#42474c",
+                    "error": "#ba1a1a",
+                    "outline": "#72787c",
+                    "primary-fixed": "#c9e7fc",
+                    "on-error-container": "#93000a",
+                    "on-background": "#1a1c1d",
+                    "on-error": "#ffffff",
+                    "tertiary": "#001714",
+                    "on-surface": "#1a1c1d",
+                    "surface-container-low": "#f4f3f5",
+                    "on-tertiary-container": "#2d9f91",
+                    "inverse-on-surface": "#f1f0f2",
+                    "secondary": "#346384",
+                    "on-secondary-container": "#2f5e7f",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#e3e2e3",
+                    "tertiary-container": "#002e29",
+                    "secondary-fixed": "#cae6ff",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#00201c",
+                    "outline-variant": "#c2c7cc",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#2e4a5b",
+                    "on-primary-container": "#7693a6",
+                    "secondary-container": "#a9d7fd",
+                    "primary-container": "#0b2b3b",
+                    "secondary-fixed-dim": "#9eccf1",
+                    "tertiary-fixed-dim": "#6fd8c8",
+                    "primary": "#001621",
+                    "surface": "#faf9fa",
+                    "surface-variant": "#e3e2e3",
+                    "surface-dim": "#dadadb",
+                    "primary-fixed-dim": "#adcadf"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1200px",
+                    "base": "8px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "card-padding": "32px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "code-inline": ["monospace"],
+                    "body-md": ["Inter"],
+                    "headline-xl-mobile": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "code-inline": ["14px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-xl-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "headline-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+
+    <!-- Estilos Personalizados Separados -->
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-    <div class="container">
-        <!-- HERO -->
-        <div class="hero">
-            <h1><i class="fas fa-microchip"></i> Gestión de Entrada/Salida</h1>
-            <p>El puente entre el sistema operativo y los dispositivos físicos.<br>
-                Controladores, interrupciones, buffering, DMA y más.</p>
-            <div class="hero-badge"><i class="fas fa-graduation-cap"></i> Contenido basado en fundamentos de SO</div>
-        </div>
-
-        <!-- Navegación rápida interna -->
-        <div class="nav-cards">
-            <a href="#que-es" class="nav-btn"><i class="fas fa-question-circle"></i> ¿Qué es E/S?</a>
-            <a href="#funciones" class="nav-btn"><i class="fas fa-tachometer-alt"></i> Funciones clave</a>
-            <a href="#drivers" class="nav-btn"><i class="fas fa-usb"></i> Drivers & BIOS</a>
-            <a href="#estrategias" class="nav-btn"><i class="fas fa-random"></i> Estrategias</a>
-            <a href="#buffering" class="nav-btn"><i class="fas fa-database"></i> Buffering vs Caché</a>
-            <a href="#rendimiento" class="nav-btn"><i class="fas fa-chart-line"></i> Rendimiento</a>
-        </div>
-
-        <!-- SECCIÓN 1 - QUÉ ES E/S -->
-        <div id="que-es" class="section-card">
-            <div class="section-title">
-                <i class="fas fa-exchange-alt"></i>
-                <span>¿Qué es la gestión de E/S?</span>
+<body class="bg-surface font-body-md text-on-surface selection:bg-secondary-container selection:text-on-secondary-container">
+    <!-- TopNavBar -->
+    <nav class="sticky top-0 w-full z-50 glass-nav shadow-sm">
+        <div class="flex justify-between items-center max-w-container-max mx-auto px-margin-mobile md:px-gutter py-4">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[32px]">memory</span>
+                <span class="text-headline-md font-headline-md font-bold text-primary">I/O OS Management</span>
             </div>
-            <p class="intro-text">La gestión de Entrada/Salida (E/S) es la administración
-                que realiza el sistema operativo sobre los dispositivos periféricos: teclados, discos, impresoras,
-                pantallas, etc. Su objetivo es proporcionar una <strong>interfaz uniforme y eficiente</strong>
-                independientemente de la velocidad o características del hardware.</p>
-            <div class="grid-2cols">
-                <div class="info-box">
-                    <i class="fas fa-microphone-alt icon-large"></i>
-                    <h3>Entrada (Input)</h3>
-                    <p>Dispositivos que introducen datos al sistema: teclado, mouse, escáner, micrófono, cámara.</p>
-                </div>
-                <div class="info-box">
-                    <i class="fas fa-tv icon-large"></i>
-                    <h3>Salida (Output)</h3>
-                    <p>Dispositivos que muestran o reproducen información: monitor, impresora, altavoces.</p>
-                </div>
+            <div class="hidden lg:flex items-center gap-6">
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#intro">Estrategias</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#buffering">Buffering</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#cache">Caché</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#recursos">Recursos</a>
+                <button class="bg-primary-container text-on-primary rounded-full px-6 py-2 font-label-md text-label-md scale-95 active:scale-90 transition-transform">Acceder</button>
             </div>
-            <div class="info-box info-box-note">
-                <p><i class="fas fa-info-circle"></i> <strong>Nota importante:</strong> No confundir con operaciones de
-                    E/S en programación (lectura/escritura de archivos, redes). La gestión de E/S del SO es a nivel de
-                    hardware y controladores.</p>
+            <div class="flex items-center gap-4 md:hidden">
+                <span class="material-symbols-outlined cursor-pointer">menu</span>
             </div>
         </div>
+    </nav>
 
-        <!-- SECCIÓN 2 - FUNCIONES PRINCIPALES -->
-        <div id="funciones" class="section-card">
-            <div class="section-title">
-                <i class="fas fa-cogs"></i>
-                <span>Funciones principales de la gestión E/S</span>
-            </div>
-            <div class="grid-2cols">
-                <div class="info-box"><i class="fas fa-sitemap"></i>
-                    <h3>Control de dispositivos</h3>
-                    <p>Coordina acceso, evita conflictos y asigna prioridades mediante colas de solicitudes.</p>
+    <!-- Hero Section -->
+    <header class="relative overflow-hidden bg-gradient-to-br from-[#0b2b3b] to-[#1c4e6e] text-on-primary py-24 md:py-32">
+        <div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter relative z-10">
+            <div class="flex flex-col items-center text-center space-y-6">
+                <div class="bg-secondary-container/20 p-4 rounded-full mb-4 animate-pulse">
+                    <span class="material-symbols-outlined text-secondary-fixed text-6xl" style="font-variation-settings: 'FILL' 1;">developer_board</span>
                 </div>
-                <div class="info-box"><i class="fas fa-hourglass-half"></i>
-                    <h3>Buffering</h3>
-                    <p>Áreas de almacenamiento temporal que mejoran el rendimiento mientras el CPU ejecuta otras tareas.
+                <h1 class="font-headline-xl text-headline-xl md:text-[64px] max-w-4xl">Gestión de Entrada/Salida</h1>
+                <p class="font-body-lg text-body-lg text-primary-fixed-dim max-w-2xl opacity-90">
+                    Descubre la arquitectura invisible que conecta el hardware con el software: controladores, interrupciones, buffering y el acceso directo a memoria (DMA).
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 mt-8">
+                    <a class="bg-secondary-fixed text-on-secondary-fixed px-8 py-3 rounded-full font-label-md text-label-md hover:bg-secondary transition-colors" href="#intro">Comenzar Lección</a>
+                    <a class="border-2 border-primary-fixed-dim text-primary-fixed-dim px-8 py-3 rounded-full font-label-md text-label-md hover:bg-white/10 transition-colors" href="#">Documentación</a>
+                </div>
+            </div>
+        </div>
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(202,230,255,0.2),transparent_70%)]"></div>
+        </div>
+    </header>
+
+    <!-- Local Pill Navigation -->
+    <section class="bg-surface py-8 border-b border-surface-container">
+        <div class="max-w-container-max mx-auto px-margin-mobile overflow-x-auto">
+            <div class="flex items-center gap-3 min-w-max pb-4">
+                <button class="flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-full font-label-md text-label-md">
+                    <span class="material-symbols-outlined text-sm">help</span> ¿Qué es E/S?
+                </button>
+                <button class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high px-5 py-2.5 rounded-full font-label-md text-label-md text-on-surface transition-colors">
+                    <span class="material-symbols-outlined text-sm">settings</span> Funciones clave
+                </button>
+                <button class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high px-5 py-2.5 rounded-full font-label-md text-label-md text-on-surface transition-colors">
+                    <span class="material-symbols-outlined text-sm">terminal</span> Drivers &amp; BIOS
+                </button>
+                <button class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high px-5 py-2.5 rounded-full font-label-md text-label-md text-on-surface transition-colors">
+                    <span class="material-symbols-outlined text-sm">strategy</span> Estrategias
+                </button>
+                <button class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high px-5 py-2.5 rounded-full font-label-md text-label-md text-on-surface transition-colors">
+                    <span class="material-symbols-outlined text-sm">speed</span> Rendimiento
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-container-max mx-auto px-margin-mobile md:px-gutter py-16 space-y-20">
+        <!-- Section: Intro -->
+        <section class="space-y-8" id="intro">
+            <div class="section-anchor">
+                <h2 class="font-headline-lg text-headline-lg text-primary">¿Qué es la gestión de E/S?</h2>
+                <p class="text-on-surface-variant font-body-md mt-2">La interfaz crítica entre la CPU y el mundo exterior.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="edu-card bg-surface-container-lowest p-card-padding">
+                    <span class="material-symbols-outlined text-on-tertiary-container mb-4 text-4xl">input</span>
+                    <h3 class="font-headline-md text-headline-md text-primary mb-3">Concepto de Entrada</h3>
+                    <p class="text-on-surface-variant font-body-md">
+                        Flujo de datos desde dispositivos periféricos (teclado, red, sensores) hacia la memoria del sistema para su procesamiento por la CPU.
                     </p>
                 </div>
-                <div class="info-box"><i class="fas fa-print"></i>
-                    <h3>Spooling</h3>
-                    <p>Almacenamiento en disco de trabajos de salida (ej. impresión) para procesamiento en segundo
-                        plano.</p>
-                </div>
-                <div class="info-box"><i class="fas fa-bell"></i>
-                    <h3>Manejo de interrupciones</h3>
-                    <p>Los dispositivos notifican al SO cuando están listos o requieren atención.</p>
-                </div>
-                <div class="info-box"><i class="fas fa-exclamation-triangle"></i>
-                    <h3>Control de errores</h3>
-                    <p>Detección y manejo de fallos en operaciones de E/S, informando a las aplicaciones.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECCIÓN 3 - DRIVERS Y BIOS -->
-        <div id="drivers" class="section-card">
-            <div class="section-title">
-                <i class="fas fa-plug"></i>
-                <span>Drivers (controladores) y rol de la BIOS</span>
-            </div>
-            <div class="grid-2cols">
-                <div class="info-box">
-                    <i class="fas fa-microchip"></i>
-                    <h3>Controladores / Drivers</h3>
-                    <p>Software que actúa como traductor entre el SO y un dispositivo específico. Cada hardware requiere
-                        su driver (impresora, gráfica, etc.). Mantenerlos actualizados garantiza compatibilidad y
-                        rendimiento.</p>
-                    <span class="badge-tech"><i class="fas fa-sync-alt"></i> Actualización clave</span>
-                </div>
-                <div class="info-box">
-                    <i class="fas fa-motherboard"></i>
-                    <h3>BIOS (Basic Input/Output System)</h3>
-                    <p>Interactúa con el hardware en el arranque (POST), pruebas iniciales y configuración básica. Una
-                        vez cargado el SO, la gestión completa de E/S pasa al sistema operativo y sus drivers.</p>
-                    <p class="highlight">La BIOS permite el inicio, pero no la gestión avanzada de E/S.</p>
-                </div>
-            </div>
-            <div class="security-box">
-                <i class="fas fa-shield-alt"></i> <strong>¿Restringir operaciones de E/S?</strong> Sí, mediante permisos
-                de usuario, políticas de seguridad, deshabilitación de puertos USB o firewalls.
-            </div>
-        </div>
-
-        <!-- SECCIÓN 4 - ESTRATEGIAS DE E/S + TÉCNICAS (Síncrona/Asíncrona, DMA, Interrupciones) -->
-        <div id="estrategias" class="section-card">
-            <div class="section-title">
-                <i class="fas fa-chart-simple"></i>
-                <span>Estrategias de gestión y técnicas de transferencia</span>
-            </div>
-            <h3 class="comp-title">Comparativa: E/S Síncrona vs Asíncrona</h3>
-            <div class="comparativa comp-container">
-                <div class="card-comp"><i class="fas fa-hourglass-start icon-huge"></i>
-                    <h4>Síncrona</h4>
-                    <p>El proceso espera hasta que la operación de E/S finaliza. Simple pero ineficiente si la E/S es
-                        lenta.</p>
-                </div>
-                <div class="card-comp"><i class="fas fa-forward icon-huge"></i>
-                    <h4>Asíncrona</h4>
-                    <p>El proceso continúa mientras la E/S ocurre en segundo plano. Mejor uso de CPU, ideal para tareas
-                        concurrentes.</p>
-                </div>
-            </div>
-
-            <h3 class="tech-title">Técnicas de programación de E/S</h3>
-            <table class="tech-table">
-                <thead>
-                    <tr>
-                        <th>Técnica</th>
-                        <th>Descripción</th>
-                        <th>Eficiencia</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Programada (Polling)</strong></td>
-                        <td>El CPU verifica constantemente el estado del dispositivo.</td>
-                        <td>Baja, desperdicia ciclos.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Por interrupciones</strong></td>
-                        <td>El dispositivo genera una interrupción al finalizar o necesitar atención.</td>
-                        <td>Alta, no desperdicia CPU innecesariamente.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>DMA (Acceso Directo a Memoria)</strong></td>
-                        <td>El controlador DMA transfiere datos directamente a memoria sin intervención del CPU.</td>
-                        <td>Muy alta, libera al procesador por completo.</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="info-box info-box-dma">
-                <i class="fas fa-tachometer-alt"></i> <strong>DMA en acción:</strong> El dispositivo solicita el bus, el
-                controlador DMA mueve los bloques de datos y notifica al CPU al terminar. Ideal para discos, tarjetas de
-                red y sonido.
-            </div>
-        </div>
-
-        <!-- SECCIÓN 5 - BUFFERING VS CACHÉ (Énfasis en PDF) -->
-        <div id="buffering" class="section-card">
-            <div class="section-title">
-                <i class="fas fa-memory"></i>
-                <span>Buffering y Caché: diferencias fundamentales</span>
-            </div>
-            <div class="grid-2cols">
-                <div class="info-box">
-                    <i class="fas fa-draw-polygon"></i>
-                    <h3>📦 Buffering</h3>
-                    <p>Área de almacenamiento temporal para igualar velocidades entre dispositivos y CPU. Usa memoria
-                        intermedia (buffer) para lectura/escritura asíncrona. Ejemplo: reproducción de video, impresión
-                        de documentos.</p>
-                    <p><strong>Ventajas:</strong> Mayor rendimiento, evita bloqueos.<br>
-                        <strong>Desventajas:</strong> Consumo de memoria, posible cuello de botella.
-                    </p>
-                </div>
-                <div class="info-box">
-                    <i class="fas fa-bolt"></i>
-                    <h3>⚡ Caché (Cache)</h3>
-                    <p>Memoria de alta velocidad que almacena datos <strong>frecuentemente utilizados</strong> para
-                        acceso ultra rápido. Se ubica entre CPU y memoria principal. Ejemplo: caché L1/L2, caché de
-                        disco.</p>
-                    <p><strong>Ventajas:</strong> Acelera aplicaciones, reduce tiempo de acceso.<br>
-                        <strong>Desventajas:</strong> Mayor costo, coherencia de datos compleja.
+                <div class="edu-card bg-surface-container-lowest p-card-padding">
+                    <span class="material-symbols-outlined text-on-tertiary-container mb-4 text-4xl">output</span>
+                    <h3 class="font-headline-md text-headline-md text-primary mb-3">Concepto de Salida</h3>
+                    <p class="text-on-surface-variant font-body-md">
+                        Envío de datos procesados desde la memoria hacia el exterior (monitores, impresoras, almacenamiento externo o redes).
                     </p>
                 </div>
             </div>
-            <table class="tech-table table-spacing">
-                <tr>
-                    <th>Aspecto</th>
-                    <th>Buffering</th>
-                    <th>Caché</th>
-                </tr>
-                <tr>
-                    <td>Propósito</td>
-                    <td>Compensar diferencias de velocidad</td>
-                    <td>Acercar datos frecuentes al CPU</td>
-                </tr>
-                <tr>
-                    <td>Ubicación típica</td>
-                    <td>Memoria principal (buffer temporal)</td>
-                    <td>Memoria estática SRAM (dentro o cerca del CPU)</td>
-                </tr>
-                <tr>
-                    <td>Ejemplo cotidiano</td>
-                    <td>Buffer en impresora o streaming de video</td>
-                    <td>Navegador web que guarda imágenes locales</td>
-                </tr>
-            </table>
-        </div>
+        </section>
 
-        <!-- SECCIÓN 6 - RENDIMIENTO Y DESAFÍOS -->
-        <div id="rendimiento" class="section-card">
-            <div class="section-title">
-                <i class="fas fa-chart-line"></i>
-                <span>Rendimiento, escalabilidad y confiabilidad</span>
+        <!-- Section: Functions -->
+        <section class="space-y-8">
+            <div class="section-anchor">
+                <h2 class="font-headline-lg text-headline-lg text-primary">Funciones principales</h2>
             </div>
-            <div class="grid-2cols">
-                <div class="info-box">
-                    <h3><i class="fas fa-stopwatch"></i> Tiempo de acceso</h3>
-                    <p>Latencia del dispositivo (ej. disco mecánico vs SSD). Afecta directamente la velocidad de
-                        operaciones.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="edu-card bg-white p-8 border-t-4 border-secondary">
+                    <span class="material-symbols-outlined text-on-secondary-container mb-4">tune</span>
+                    <h4 class="font-headline-md text-headline-md text-on-secondary-fixed-variant mb-2">Control</h4>
+                    <p class="text-on-surface-variant text-sm">Envío de comandos a los dispositivos para iniciar operaciones de lectura o escritura.</p>
                 </div>
-                <div class="info-box">
-                    <h3><i class="fas fa-tachometer-alt"></i> Tasa de transferencia</h3>
-                    <p>Cantidad de datos por segundo. DMA y buses rápidos mejoran este factor.</p>
+                <!-- Card 2 -->
+                <div class="edu-card bg-white p-8 border-t-4 border-secondary">
+                    <span class="material-symbols-outlined text-on-secondary-container mb-4">hourglass_top</span>
+                    <h4 class="font-headline-md text-headline-md text-on-secondary-fixed-variant mb-2">Buffering</h4>
+                    <p class="text-on-surface-variant text-sm">Uso de memorias intermedias para compensar las diferencias de velocidad entre dispositivos.</p>
                 </div>
-                <div class="info-box">
-                    <h3><i class="fas fa-chart-pie"></i> Tamaño del buffer</h3>
-                    <p>Un buffer más grande reduce interrupciones, pero consume memoria. Balance crítico.</p>
+                <!-- Card 3 -->
+                <div class="edu-card bg-white p-8 border-t-4 border-secondary">
+                    <span class="material-symbols-outlined text-on-secondary-container mb-4">print</span>
+                    <h4 class="font-headline-md text-headline-md text-on-secondary-fixed-variant mb-2">Spooling</h4>
+                    <p class="text-on-surface-variant text-sm">Almacenamiento temporal para dispositivos compartidos de acceso secuencial como impresoras.</p>
                 </div>
-                <div class="info-box">
-                    <h3><i class="fas fa-shield-virus"></i> Confiabilidad</h3>
-                    <p>Manejo de errores, redundancia y protección de datos en transferencias críticas.</p>
+                <!-- Card 4 -->
+                <div class="edu-card bg-white p-8 border-t-4 border-secondary">
+                    <span class="material-symbols-outlined text-on-secondary-container mb-4">bolt</span>
+                    <h4 class="font-headline-md text-headline-md text-on-secondary-fixed-variant mb-2">Interrupciones</h4>
+                    <h5 class="text-xs uppercase tracking-widest text-secondary font-bold mb-2">Manejo de Eventos</h5>
+                    <p class="text-on-surface-variant text-sm">Gestión de señales asíncronas que notifican la finalización de una tarea de hardware.</p>
+                </div>
+                <!-- Card 5 -->
+                <div class="edu-card bg-white p-8 border-t-4 border-secondary">
+                    <span class="material-symbols-outlined text-on-secondary-container mb-4">report</span>
+                    <h4 class="font-headline-md text-headline-md text-on-secondary-fixed-variant mb-2">Errores</h4>
+                    <p class="text-on-surface-variant text-sm">Detección y corrección de fallos en la transferencia de datos para garantizar la integridad.</p>
+                </div>
+                <!-- Card 6: Visual CTA -->
+                <div class="edu-card bg-primary-container p-8 flex flex-col justify-center items-center text-center">
+                    <p class="text-primary-fixed-dim font-bold mb-2">¿Quieres profundizar?</p>
+                    <button class="bg-secondary-fixed text-on-secondary-fixed px-6 py-2 rounded-full font-label-md hover:bg-secondary hover:text-white transition-colors">Ver Diagramas</button>
                 </div>
             </div>
-            <div class="info-box info-box-opt">
-                <i class="fas fa-lightbulb"></i> <strong>Estrategias de optimización:</strong> Organización de datos en
-                disco, planificación de E/S (colas con prioridad), uso de caché de disco y técnicas como el spooling.
-            </div>
-            <p class="exercise-text"><i class="fas fa-microphone-alt"></i> <strong>Ejercicio
-                    reflexivo:</strong> ¿Qué técnica usarías para un servidor web con miles de peticiones de archivos
-                estáticos? La combinación de caché en RAM + DMA + planificación justa mejora drásticamente el
-                rendimiento.</p>
-        </div>
+        </section>
 
-        <!-- SECCIÓN ADICIONAL: INTERRUPCIONES EN PROFUNDIDAD -->
-        <div class="section-card">
-            <div class="section-title">
-                <i class="fas fa-broadcast-tower"></i>
-                <span>Interrupciones de E/S y controladores</span>
+        <!-- Section: Drivers & BIOS -->
+        <section class="space-y-8">
+            <div class="section-anchor">
+                <h2 class="font-headline-lg text-headline-lg text-primary">Drivers y BIOS</h2>
+                <p class="text-on-surface-variant">La jerarquía de abstracción en el sistema operativo.</p>
             </div>
-            <p>Las interrupciones son señales eléctricas o lógicas que detienen momentáneamente la ejecución del CPU
-                para atender un evento de hardware o software. Los pasos típicos:</p>
-            <ol class="interrupt-list">
-                <li>El dispositivo de E/S completa la operación y envía una interrupción.</li>
-                <li>El controlador notifica al procesador (IRQ).</li>
-                <li>El SO guarda el contexto del proceso actual.</li>
-                <li>Se ejecuta el manejador de interrupciones (ISR).</li>
-                <li>Se restaura el contexto y el proceso continúa.</li>
-            </ol>
-            <div class="grid-2cols grid-spacing">
-                <div class="info-box"><i class="fas fa-microchip"></i>
-                    <h3>Interrupción Hardware</h3>
-                    <p>Generada por un periférico (disco, teclado).</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4">
+                    <div class="flex gap-4 p-6 bg-surface-container-low rounded-xl border border-outline-variant hover:border-primary transition-colors">
+                        <div class="bg-primary text-on-primary w-12 h-12 flex items-center justify-center rounded-lg shrink-0">
+                            <span class="material-symbols-outlined">developer_mode</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline-md text-headline-md">Manejadores (Drivers)</h4>
+                            <p class="text-on-surface-variant text-sm mt-1">Software específico que traduce comandos genéricos del OS en instrucciones que el hardware entiende.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 p-6 bg-surface-container-low rounded-xl border border-outline-variant hover:border-secondary transition-colors">
+                        <div class="bg-secondary text-on-primary w-12 h-12 flex items-center justify-center rounded-lg shrink-0">
+                            <span class="material-symbols-outlined">settings_power</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline-md text-headline-md">BIOS / Firmware</h4>
+                            <p class="text-on-surface-variant text-sm mt-1">Código de bajo nivel que inicializa el hardware y provee servicios básicos de E/S antes del OS.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="info-box"><i class="fas fa-code"></i>
-                    <h3>Interrupción Software</h3>
-                    <p>Generada por una llamada al sistema o excepción.</p>
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl h-[300px]">
+                    <img alt="Motherboard close-up" class="object-cover w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF552W7Cs7pkFDP_a7MsTgoxlzaBQsEdmIGWdMuT5AKogOEaew0JFDJdIDsgAhEI6NuOS-m_FCb0sCFk3az3hfsBT9n4Lww-la_MCGGwm8U78LtIfLDFXw-ijQmcKhr7Ub7kdW2ToBnd4ji_hdr0v0semHuSVUAycCDBdTx2SuvWAgfA9PMybS3dfDA-K8uaxNgYY22AcJq4RBNgS46_6BqdXXgfz9iNW0YyxRTXldzpUKizNNHapnigY7mfnbKUm0BTU3qks93nc"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-8">
+                        <span class="text-on-primary font-bold text-lg">Arquitectura de Capas de E/S</span>
+                    </div>
                 </div>
             </div>
-            <p class="highlight highlight-spacing"><i class="fas fa-exchange-alt"></i> Los
-                controladores de dispositivo manejan estas interrupciones y traducen comandos genéricos del SO en
-                instrucciones específicas del hardware.</p>
-        </div>
+        </section>
 
-        <!-- CONCLUSIÓN / RECOMENDACIONES -->
-        <div class="section-card section-conclusion">
-            <div class="section-title">
-                <i class="fas fa-chalkboard-teacher"></i>
-                <span>Conclusiones y próximos pasos</span>
+        <!-- Section: Estrategias & Table -->
+        <section class="space-y-12">
+            <div class="section-anchor">
+                <h2 class="font-headline-lg text-headline-lg text-primary">Estrategias de Transferencia</h2>
             </div>
-            <p class="conclusion-text">La gestión eficiente de E/S es fundamental para el rendimiento, la escalabilidad
-                y la seguridad de cualquier sistema operativo moderno. Entender conceptos como <strong>buffering, caché,
-                    DMA, interrupciones y planificación</strong> permite construir aplicaciones más rápidas y
-                confiables.</p>
-            <div class="conclusion-list">
-                <div><i class="fas fa-check-circle check-icon"></i> Optimización continua</div>
-                <div><i class="fas fa-check-circle check-icon"></i> Uso de DMA en sistemas de alto
-                    rendimiento</div>
-                <div><i class="fas fa-check-circle check-icon"></i> Mantenimiento de controladores
-                    actualizados</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-tertiary-container/10 border-l-4 border-tertiary p-8 rounded-r-2xl">
+                    <h3 class="text-tertiary font-bold mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined">sync</span> Síncrona
+                    </h3>
+                    <p class="text-on-surface-variant">La CPU espera bloqueada hasta que el dispositivo completa la operación. Fácil de implementar pero ineficiente para multitarea.</p>
+                </div>
+                <div class="bg-[#2a9d8f]/10 border-l-4 border-[#2a9d8f] p-8 rounded-r-2xl">
+                    <h3 class="text-[#005048] font-bold mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined">sync_alt</span> Asíncrona
+                    </h3>
+                    <p class="text-on-surface-variant">La CPU inicia la operación y continúa ejecutando otros procesos. Es notificada mediante interrupciones al terminar.</p>
+                </div>
             </div>
-            <hr class="divider">
-            <p><i class="fas fa-globe"></i> <strong>Recursos gratuitos recomendados para implementar este
-                    sitio:</strong> WordPress.com, Google Sites o incluso esta misma página HTML5 que puede alojarse en
-                GitHub Pages. El diseño responsive permite ser visto en celulares, tablets y PCs.</p>
-            <div class="tech-badges-container">
-                <span class="badge-tech"><i class="fab fa-html5"></i> HTML5 semántico</span>
-                <span class="badge-tech"><i class="fab fa-css3-alt"></i> CSS Flex/Grid</span>
-                <span class="badge-tech"><i class="fas fa-universal-access"></i> Accesible</span>
+            <div class="overflow-hidden rounded-2xl border border-outline-variant shadow-sm">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[600px]">
+                        <thead>
+                            <tr class="bg-primary text-on-primary">
+                                <th class="p-4 font-label-md">Técnica</th>
+                                <th class="p-4 font-label-md">Descripción</th>
+                                <th class="p-4 font-label-md">Carga CPU</th>
+                                <th class="p-4 font-label-md">Uso Ideal</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-outline-variant">
+                            <tr class="bg-surface hover:bg-surface-container-low transition-colors">
+                                <td class="p-4 font-bold text-primary">Polling</td>
+                                <td class="p-4 text-sm">Consulta constante del estado del dispositivo.</td>
+                                <td class="p-4 text-error font-semibold">Muy Alta</td>
+                                <td class="p-4 text-sm">Dispositivos ultra-rápidos.</td>
+                            </tr>
+                            <tr class="bg-surface-container-lowest hover:bg-surface-container transition-colors">
+                                <td class="p-4 font-bold text-primary">Interrupciones</td>
+                                <td class="p-4 text-sm">El dispositivo avisa cuando está listo.</td>
+                                <td class="p-4 text-secondary font-semibold">Media</td>
+                                <td class="p-4 text-sm">Teclados, ratones, redes.</td>
+                            </tr>
+                            <tr class="bg-surface hover:bg-surface-container-low transition-colors">
+                                <td class="p-4 font-bold text-primary">DMA</td>
+                                <td class="p-4 text-sm">Transferencia directa Memoria-Dispositivo.</td>
+                                <td class="p-4 text-[#2a9d8f] font-semibold">Baja</td>
+                                <td class="p-4 text-sm">Discos duros, Video 4K.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Buffering vs Cache -->
+        <section class="space-y-8" id="buffering">
+            <div class="section-anchor">
+                <h2 class="font-headline-lg text-headline-lg text-primary">Buffering y Caché</h2>
+                <p class="text-on-surface-variant">Optimizando el flujo de datos.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="edu-card bg-white p-10 flex flex-col items-center text-center">
+                    <div class="w-20 h-20 bg-secondary-fixed rounded-full flex items-center justify-center mb-6">
+                        <span class="material-symbols-outlined text-4xl text-on-secondary-fixed" style="font-variation-settings: 'FILL' 1;">dataset</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md mb-4 text-primary">Buffering</h3>
+                    <p class="text-on-surface-variant mb-6 italic text-sm">"Suaviza las diferencias de velocidad"</p>
+                    <ul class="text-left space-y-3 text-sm w-full bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+                        <li class="flex items-start gap-3"><span class="material-symbols-outlined text-green-600 text-[20px]">check_circle</span> Almacena datos temporalmente.</li>
+                        <li class="flex items-start gap-3"><span class="material-symbols-outlined text-green-600 text-[20px]">check_circle</span> Evita pérdida por desbordamiento.</li>
+                        <li class="flex items-start gap-3"><span class="material-symbols-outlined text-green-600 text-[20px]">check_circle</span> Adaptación de anchos de banda.</li>
+                    </ul>
+                </div>
+                <div class="edu-card bg-white p-10 flex flex-col items-center text-center">
+                    <div class="w-20 h-20 bg-tertiary-fixed rounded-full flex items-center justify-center mb-6">
+                        <span class="material-symbols-outlined text-4xl text-on-tertiary-fixed" style="font-variation-settings: 'FILL' 1;">speed</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md mb-4 text-primary">Caché</h3>
+                    <p class="text-on-surface-variant mb-6 italic text-sm">"Mejora el tiempo de acceso"</p>
+                    <ul class="text-left space-y-3 text-sm w-full bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+                        <li class="flex items-start gap-3"><span class="material-symbols-outlined text-green-600 text-[20px]">check_circle</span> Almacena copias de datos frecuentes.</li>
+                        <li class="flex items-start gap-3"><span class="material-symbols-outlined text-green-600 text-[20px]">check_circle</span> Reduce latencia de recuperación.</li>
+                        <li class="flex items-start gap-3"><span class="material-symbols-outlined text-green-600 text-[20px]">check_circle</span> Transparente para el usuario.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Rendimiento -->
+        <section class="space-y-8" id="recursos">
+            <div class="section-anchor">
+                <h2 class="font-headline-lg text-headline-lg text-primary">Métricas de Rendimiento</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-surface-container p-6 rounded-2xl border-l-4 border-error hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+                    <p class="text-xs font-bold uppercase text-on-surface-variant mb-1">Latencia</p>
+                    <h4 class="text-2xl font-bold text-primary">Tiempo de Respuesta</h4>
+                    <p class="text-xs mt-2 opacity-70">Tiempo total desde solicitud a entrega.</p>
+                </div>
+                <div class="bg-surface-container p-6 rounded-2xl border-l-4 border-secondary hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+                    <p class="text-xs font-bold uppercase text-on-surface-variant mb-1">Throughput</p>
+                    <h4 class="text-2xl font-bold text-primary">Tasa de Transferencia</h4>
+                    <p class="text-xs mt-2 opacity-70">Cantidad de datos por unidad de tiempo.</p>
+                </div>
+                <div class="bg-surface-container p-6 rounded-2xl border-l-4 border-on-tertiary-container hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+                    <p class="text-xs font-bold uppercase text-on-surface-variant mb-1">Utilización</p>
+                    <h4 class="text-2xl font-bold text-primary">Uso de CPU</h4>
+                    <p class="text-xs mt-2 opacity-70">Porcentaje de tiempo que la CPU gestiona E/S.</p>
+                </div>
+                <div class="bg-surface-container p-6 rounded-2xl border-l-4 border-primary hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+                    <p class="text-xs font-bold uppercase text-on-surface-variant mb-1">Overhead</p>
+                    <h4 class="text-2xl font-bold text-primary">Carga Extra</h4>
+                    <p class="text-xs mt-2 opacity-70">Costo de gestión del sistema operativo.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Interrupciones -->
+        <section class="space-y-8">
+            <div class="section-anchor">
+                <h2 class="font-headline-lg text-headline-lg text-primary">Interrupciones</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="edu-card bg-surface-container-high p-8 group overflow-hidden relative">
+                    <div class="relative z-10">
+                        <span class="text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Hardware</span>
+                        <h3 class="text-2xl font-bold mb-4">Interrupción Externa</h3>
+                        <p class="text-on-surface-variant text-sm">Generada por periféricos externos como un clic de ratón o la llegada de un paquete de red.</p>
+                    </div>
+                    <span class="material-symbols-outlined absolute -bottom-4 -right-4 text-[120px] opacity-10 text-primary group-hover:scale-110 transition-transform duration-500">mouse</span>
+                </div>
+                <div class="edu-card bg-surface-container-high p-8 group overflow-hidden relative">
+                    <div class="relative z-10">
+                        <span class="text-xs font-bold text-on-tertiary-container uppercase tracking-widest block mb-2">Software</span>
+                        <h3 class="text-2xl font-bold mb-4">Traps / Excepciones</h3>
+                        <p class="text-on-surface-variant text-sm">Generada por el propio programa en ejecución, como una división por cero o una llamada al sistema.</p>
+                    </div>
+                    <span class="material-symbols-outlined absolute -bottom-4 -right-4 text-[120px] opacity-10 text-primary group-hover:scale-110 transition-transform duration-500">code</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Conclusion / CTA -->
+        <section class="rounded-[2rem] bg-gradient-to-r from-primary to-secondary p-12 text-on-primary text-center space-y-6 shadow-2xl relative overflow-hidden">
+            <div class="relative z-10">
+                <h2 class="font-headline-lg text-headline-lg">Domina la Arquitectura de Sistemas</h2>
+                <p class="font-body-lg text-primary-fixed-dim max-w-2xl mx-auto mb-8">La gestión eficiente de E/S es el corazón de un sistema operativo moderno y escalable.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button class="bg-white text-primary px-8 py-3 rounded-full font-label-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 font-bold">Realizar Autoevaluación</button>
+                    <button class="bg-transparent border-2 border-white/30 text-white px-8 py-3 rounded-full font-label-md hover:bg-white/10 transition-colors">Descargar PDF del Tema</button>
+                </div>
+            </div>
+            <span class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[300px] opacity-5 pointer-events-none">memory</span>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-primary-container text-on-primary-fixed py-16">
+        <div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-secondary-fixed text-4xl">terminal</span>
+                        <span class="text-headline-md font-headline-md font-bold text-white">OS Docs</span>
+                    </div>
+                    <p class="text-primary-fixed-dim max-w-sm opacity-80 leading-relaxed">
+                        Plataforma educativa dedicada a la enseñanza profunda de la arquitectura de computadores y sistemas operativos.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-12">
+                    <div class="space-y-3">
+                        <p class="font-bold text-white uppercase text-xs tracking-wider">Recursos</p>
+                        <ul class="space-y-2 opacity-80 text-sm">
+                            <li><a class="hover:text-secondary-fixed transition-colors" href="#">Documentación</a></li>
+                            <li><a class="hover:text-secondary-fixed transition-colors" href="#">Repositorio</a></li>
+                            <li><a class="hover:text-secondary-fixed transition-colors" href="#">Glosario</a></li>
+                        </ul>
+                    </div>
+                    <div class="space-y-3">
+                        <p class="font-bold text-white uppercase text-xs tracking-wider">Legal</p>
+                        <ul class="space-y-2 opacity-80 text-sm">
+                            <li><a class="hover:text-secondary-fixed transition-colors" href="#">Privacidad</a></li>
+                            <li><a class="hover:text-secondary-fixed transition-colors" href="#">Términos</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm opacity-60">© 2026 Departamento de Arquitectura de Sistemas Operativos. Todos los derechos reservados.</p>
+                <div class="flex gap-4">
+                    <span class="material-symbols-outlined opacity-60 hover:opacity-100 hover:text-secondary-fixed cursor-pointer transition-all">share</span>
+                    <span class="material-symbols-outlined opacity-60 hover:opacity-100 hover:text-secondary-fixed cursor-pointer transition-all">school</span>
+                </div>
             </div>
         </div>
+    </footer>
 
-        <footer>
-            <i class="fas fa-laptop-code"></i> Contenido educativo basado en fundamentos de Sistemas Operativos —
-            Gestión de E/S, Drivers, DMA y Caché.<br>
-            Fuentes: Medium (Diego Coder) y material académico "Sistemas Operativos.pdf" | Diseño libre para
-            aprendizaje.
-        </footer>
-    </div>
+    <!-- Scripts Separados -->
     <script src="script.js"></script>
 </body>
-
 </html>
