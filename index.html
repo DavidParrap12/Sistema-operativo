@@ -186,7 +186,7 @@
                     <span class="material-symbols-outlined text-on-tertiary-container mb-4 text-4xl">input</span>
                     <h3 class="font-headline-md text-headline-md text-primary mb-3">Concepto de Entrada</h3>
                     <p class="text-on-surface-variant font-body-md">
-                        Flujo de datos desde dispositivos periféricos (teclado, red, sensores) hacia la memoria del sistema para su procesamiento por la CPU.
+                        Flujo de datos desde dispositivos periféricos (teclado, red, sensores) hacia la memoria del sistema para su procesamiento por la <span class="tooltip-term">CPU<span class="tooltip-popup"><span class="tooltip-title">📌 CPU</span>Unidad Central de Procesamiento. Ejecuta instrucciones y coordina todos los componentes del sistema.</span></span>.
                     </p>
                 </div>
                 <div class="edu-card bg-surface-container-lowest p-card-padding">
@@ -209,26 +209,26 @@
                 <div class="edu-card bg-white p-8 border-t-4 border-secondary">
                     <span class="material-symbols-outlined text-on-secondary-container mb-4">tune</span>
                     <h4 class="font-headline-md text-headline-md text-on-secondary-fixed-variant mb-2">Control</h4>
-                    <p class="text-on-surface-variant text-sm">Envío de comandos a los dispositivos para iniciar operaciones de lectura o escritura.</p>
+                    <p class="text-on-surface-variant text-sm">Envío de comandos a los dispositivos para iniciar operaciones de lectura o escritura mediante <span class="tooltip-term">registros de control<span class="tooltip-popup"><span class="tooltip-title">📌 Registros de Control</span>Posiciones de memoria mapeadas que permiten a la CPU enviar instrucciones directamente al controlador del dispositivo.</span></span>.</p>
                 </div>
                 <!-- Card 2 -->
                 <div class="edu-card bg-white p-8 border-t-4 border-secondary">
                     <span class="material-symbols-outlined text-on-secondary-container mb-4">hourglass_top</span>
                     <h4 class="font-headline-md text-headline-md text-on-secondary-fixed-variant mb-2">Buffering</h4>
-                    <p class="text-on-surface-variant text-sm">Uso de memorias intermedias para compensar las diferencias de velocidad entre dispositivos.</p>
+                    <p class="text-on-surface-variant text-sm">Uso de memorias intermedias (<span class="tooltip-term">buffers<span class="tooltip-popup"><span class="tooltip-title">📌 Buffer</span>Zona de memoria temporal que almacena datos en tránsito para compensar diferencias de velocidad entre productor y consumidor.</span></span>) para compensar las diferencias de velocidad entre dispositivos.</p>
                 </div>
                 <!-- Card 3 -->
                 <div class="edu-card bg-white p-8 border-t-4 border-secondary">
                     <span class="material-symbols-outlined text-on-secondary-container mb-4">print</span>
                     <h4 class="font-headline-md text-headline-md text-on-secondary-fixed-variant mb-2">Spooling</h4>
-                    <p class="text-on-surface-variant text-sm">Almacenamiento temporal para dispositivos compartidos de acceso secuencial como impresoras.</p>
+                    <p class="text-on-surface-variant text-sm">Almacenamiento temporal (<span class="tooltip-term">spooling<span class="tooltip-popup"><span class="tooltip-title">📌 Spooling</span>Simultaneous Peripheral Operations On-Line. Cola de trabajos en disco que permite compartir dispositivos secuenciales (ej: impresoras) entre múltiples procesos.</span></span>) para dispositivos compartidos de acceso secuencial como impresoras.</p>
                 </div>
                 <!-- Card 4 -->
                 <div class="edu-card bg-white p-8 border-t-4 border-secondary">
                     <span class="material-symbols-outlined text-on-secondary-container mb-4">bolt</span>
                     <h4 class="font-headline-md text-headline-md text-on-secondary-fixed-variant mb-2">Interrupciones</h4>
                     <h5 class="text-xs uppercase tracking-widest text-secondary font-bold mb-2">Manejo de Eventos</h5>
-                    <p class="text-on-surface-variant text-sm">Gestión de señales asíncronas que notifican la finalización de una tarea de hardware.</p>
+                    <p class="text-on-surface-variant text-sm">Gestión de señales asíncronas (<span class="tooltip-term">IRQ<span class="tooltip-popup"><span class="tooltip-title">📌 IRQ</span>Interrupt Request. Línea de señal de hardware que indica a la CPU que un dispositivo necesita atención inmediata.</span></span>) que notifican la finalización de una tarea de hardware.</p>
                 </div>
                 <!-- Card 5 -->
                 <div class="edu-card bg-white p-8 border-t-4 border-secondary">
@@ -239,7 +239,7 @@
                 <!-- Card 6: Visual CTA -->
                 <div class="edu-card bg-primary-container p-8 flex flex-col justify-center items-center text-center">
                     <p class="text-primary-fixed-dim font-bold mb-2">¿Quieres profundizar?</p>
-                    <button class="bg-secondary-fixed text-on-secondary-fixed px-6 py-2 rounded-full font-label-md hover:bg-secondary hover:text-white transition-colors">Ver Diagramas</button>
+                    <button data-href="#drivers" class="bg-secondary-fixed text-on-secondary-fixed px-6 py-2 rounded-full font-label-md hover:bg-secondary hover:text-white transition-colors">Ver Diagramas</button>
                 </div>
             </div>
         </section>
@@ -247,34 +247,94 @@
         <!-- Section: Drivers & BIOS -->
         <section class="space-y-8" id="drivers">
             <div class="section-anchor">
-                <h2 class="font-headline-lg text-headline-lg text-primary">Drivers y BIOS</h2>
-                <p class="text-on-surface-variant">La jerarquía de abstracción en el sistema operativo.</p>
+                <h2 class="font-headline-lg text-headline-lg text-primary">Arquitectura de Capas de E/S</h2>
+                <p class="text-on-surface-variant">Haz clic en cada capa para explorar la jerarquía de abstracción. Los datos fluyen de arriba hacia abajo.</p>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+                <!-- Diagrama interactivo -->
+                <div class="layer-diagram" id="layer-diagram">
+                    <!-- Capa 1: Aplicación -->
+                    <div class="layer-item text-white" style="background: linear-gradient(135deg, #346384, #4a8ab5);" data-layer="app">
+                        <div class="layer-header">
+                            <span class="material-symbols-outlined layer-icon">apps</span>
+                            <span class="layer-title">Aplicación de Usuario</span>
+                            <span class="material-symbols-outlined layer-toggle">expand_more</span>
+                        </div>
+                        <div class="layer-detail">
+                            <p>Los programas del usuario solicitan operaciones de E/S mediante llamadas al sistema (<code>read()</code>, <code>write()</code>). No interactúan directamente con el hardware; usan una API abstracta proporcionada por el kernel.</p>
+                        </div>
+                    </div>
+                    <!-- Conector 1→2 -->
+                    <div class="layer-connector">
+                        <div class="connector-line" style="--connector-from: #346384; --connector-to: #0b2b3b;"></div>
+                    </div>
+                    <!-- Capa 2: Sistema Operativo -->
+                    <div class="layer-item text-white" style="background: linear-gradient(135deg, #0b2b3b, #1c4e6e);" data-layer="os">
+                        <div class="layer-header">
+                            <span class="material-symbols-outlined layer-icon">memory</span>
+                            <span class="layer-title">Sistema Operativo (Kernel)</span>
+                            <span class="material-symbols-outlined layer-toggle">expand_more</span>
+                        </div>
+                        <div class="layer-detail">
+                            <p>El kernel gestiona las colas de solicitudes, planifica las operaciones de E/S, maneja interrupciones y aplica políticas de buffering y caché. Es el intermediario central entre aplicaciones y drivers.</p>
+                        </div>
+                    </div>
+                    <!-- Conector 2→3 -->
+                    <div class="layer-connector">
+                        <div class="connector-line" style="--connector-from: #1c4e6e; --connector-to: #005048;"></div>
+                    </div>
+                    <!-- Capa 3: Drivers -->
+                    <div class="layer-item text-white" style="background: linear-gradient(135deg, #005048, #2a9d8f);" data-layer="driver">
+                        <div class="layer-header">
+                            <span class="material-symbols-outlined layer-icon">developer_mode</span>
+                            <span class="layer-title">Drivers (Controladores)</span>
+                            <span class="material-symbols-outlined layer-toggle">expand_more</span>
+                        </div>
+                        <div class="layer-detail">
+                            <p>Traducen los comandos genéricos del OS en instrucciones específicas del hardware. Cada dispositivo (GPU, SSD, NIC) tiene su propio driver que conoce los registros y protocolos del controlador.</p>
+                        </div>
+                    </div>
+                    <!-- Conector 3→4 -->
+                    <div class="layer-connector">
+                        <div class="connector-line" style="--connector-from: #2a9d8f; --connector-to: #72787c;"></div>
+                    </div>
+                    <!-- Capa 4: Hardware -->
+                    <div class="layer-item text-white" style="background: linear-gradient(135deg, #42474c, #72787c);" data-layer="hw">
+                        <div class="layer-header">
+                            <span class="material-symbols-outlined layer-icon">developer_board</span>
+                            <span class="layer-title">Hardware (Dispositivo Físico)</span>
+                            <span class="material-symbols-outlined layer-toggle">expand_more</span>
+                        </div>
+                        <div class="layer-detail">
+                            <p>El controlador del dispositivo ejecuta la operación física: mover el cabezal del disco, encender un LED, transmitir un paquete por la red. Comunica su estado al driver vía interrupciones o DMA.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Info panel lateral -->
                 <div class="space-y-4">
-                    <div class="flex gap-4 p-6 bg-surface-container-low rounded-xl border border-outline-variant hover:border-primary transition-colors">
+                    <div class="flex gap-4 p-6 bg-surface-container-low rounded-xl border border-outline-variant">
                         <div class="bg-primary text-on-primary w-12 h-12 flex items-center justify-center rounded-lg shrink-0">
                             <span class="material-symbols-outlined">developer_mode</span>
                         </div>
                         <div>
-                            <h4 class="font-headline-md text-headline-md">Manejadores (Drivers)</h4>
+                            <h4 class="font-headline-md text-headline-md">Manejadores (<span class="tooltip-term">Drivers<span class="tooltip-popup"><span class="tooltip-title">📌 Driver</span>Software que actúa como traductor entre el sistema operativo y un dispositivo de hardware específico.</span></span>)</h4>
                             <p class="text-on-surface-variant text-sm mt-1">Software específico que traduce comandos genéricos del OS en instrucciones que el hardware entiende.</p>
                         </div>
                     </div>
-                    <div class="flex gap-4 p-6 bg-surface-container-low rounded-xl border border-outline-variant hover:border-secondary transition-colors">
+                    <div class="flex gap-4 p-6 bg-surface-container-low rounded-xl border border-outline-variant">
                         <div class="bg-secondary text-on-primary w-12 h-12 flex items-center justify-center rounded-lg shrink-0">
                             <span class="material-symbols-outlined">settings_power</span>
                         </div>
                         <div>
-                            <h4 class="font-headline-md text-headline-md">BIOS / Firmware</h4>
+                            <h4 class="font-headline-md text-headline-md"><span class="tooltip-term">BIOS<span class="tooltip-popup"><span class="tooltip-title">📌 BIOS</span>Basic Input/Output System. Firmware almacenado en ROM que inicializa y prueba el hardware al encender el equipo (POST), antes de cargar el sistema operativo.</span></span> / Firmware</h4>
                             <p class="text-on-surface-variant text-sm mt-1">Código de bajo nivel que inicializa el hardware y provee servicios básicos de E/S antes del OS.</p>
                         </div>
                     </div>
-                </div>
-                <div class="relative rounded-3xl overflow-hidden shadow-2xl h-[300px]">
-                    <img alt="Motherboard close-up" class="object-cover w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF552W7Cs7pkFDP_a7MsTgoxlzaBQsEdmIGWdMuT5AKogOEaew0JFDJdIDsgAhEI6NuOS-m_FCb0sCFk3az3hfsBT9n4Lww-la_MCGGwm8U78LtIfLDFXw-ijQmcKhr7Ub7kdW2ToBnd4ji_hdr0v0semHuSVUAycCDBdTx2SuvWAgfA9PMybS3dfDA-K8uaxNgYY22AcJq4RBNgS46_6BqdXXgfz9iNW0YyxRTXldzpUKizNNHapnigY7mfnbKUm0BTU3qks93nc"/>
-                    <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-8">
-                        <span class="text-on-primary font-bold text-lg">Arquitectura de Capas de E/S</span>
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl h-[200px]">
+                        <img alt="Motherboard close-up" class="object-cover w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF552W7Cs7pkFDP_a7MsTgoxlzaBQsEdmIGWdMuT5AKogOEaew0JFDJdIDsgAhEI6NuOS-m_FCb0sCFk3az3hfsBT9n4Lww-la_MCGGwm8U78LtIfLDFXw-ijQmcKhr7Ub7kdW2ToBnd4ji_hdr0v0semHuSVUAycCDBdTx2SuvWAgfA9PMybS3dfDA-K8uaxNgYY22AcJq4RBNgS46_6BqdXXgfz9iNW0YyxRTXldzpUKizNNHapnigY7mfnbKUm0BTU3qks93nc"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-6">
+                            <span class="text-on-primary font-bold text-sm">↑ Haz clic en las capas para explorar</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -290,13 +350,13 @@
                     <h3 class="text-tertiary font-bold mb-4 flex items-center gap-2">
                         <span class="material-symbols-outlined">sync</span> Síncrona
                     </h3>
-                    <p class="text-on-surface-variant">La CPU espera bloqueada hasta que el dispositivo completa la operación. Fácil de implementar pero ineficiente para multitarea.</p>
+                    <p class="text-on-surface-variant">La CPU espera bloqueada (usualmente haciendo <span class="tooltip-term">Polling<span class="tooltip-popup"><span class="tooltip-title">📌 Polling</span>Técnica donde la CPU verifica repetidamente (en bucle) el estado del dispositivo. Simple pero consume muchos ciclos de CPU.</span></span>) hasta que el dispositivo completa la operación. Fácil de implementar pero ineficiente para multitarea.</p>
                 </div>
                 <div class="bg-[#2a9d8f]/10 border-l-4 border-[#2a9d8f] p-8 rounded-r-2xl">
                     <h3 class="text-[#005048] font-bold mb-4 flex items-center gap-2">
                         <span class="material-symbols-outlined">sync_alt</span> Asíncrona
                     </h3>
-                    <p class="text-on-surface-variant">La CPU inicia la operación y continúa ejecutando otros procesos. Es notificada mediante interrupciones al terminar.</p>
+                    <p class="text-on-surface-variant">La CPU inicia la operación y continúa ejecutando otros procesos (delegando con <span class="tooltip-term">DMA<span class="tooltip-popup"><span class="tooltip-title">📌 DMA</span>Direct Memory Access. Permite a los dispositivos transferir datos directamente a/desde la memoria RAM sin intervención de la CPU, liberándola para otras tareas.</span></span>). Es notificada mediante interrupciones al terminar.</p>
                 </div>
             </div>
             <div class="overflow-hidden rounded-2xl border border-outline-variant shadow-sm">
@@ -373,27 +433,40 @@
         <section class="space-y-8" id="recursos">
             <div class="section-anchor">
                 <h2 class="font-headline-lg text-headline-lg text-primary">Métricas de Rendimiento</h2>
+                <p class="text-on-surface-variant">Indicadores clave que se animan al entrar en pantalla.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="metrics-grid">
                 <div class="bg-surface-container p-6 rounded-2xl border-l-4 border-error hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    <p class="text-xs font-bold uppercase text-on-surface-variant mb-1">Latencia</p>
-                    <h4 class="text-2xl font-bold text-primary">Tiempo de Respuesta</h4>
-                    <p class="text-xs mt-2 opacity-70">Tiempo total desde solicitud a entrega.</p>
+                    <p class="text-xs font-bold uppercase text-on-surface-variant mb-3">Latencia</p>
+                    <div class="metric-counter" data-target="12" data-unit="ms" data-bar="75" data-bar-color="#ba1a1a">
+                        <span class="counter-value">0</span><span class="counter-unit">ms</span>
+                    </div>
+                    <div class="counter-bar"><div class="counter-bar-fill" style="background: linear-gradient(90deg, #ba1a1a, #ff6b6b);"></div></div>
+                    <p class="text-xs mt-3 opacity-70">Tiempo promedio de respuesta de un SSD NVMe.</p>
                 </div>
                 <div class="bg-surface-container p-6 rounded-2xl border-l-4 border-secondary hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    <p class="text-xs font-bold uppercase text-on-surface-variant mb-1">Throughput</p>
-                    <h4 class="text-2xl font-bold text-primary">Tasa de Transferencia</h4>
-                    <p class="text-xs mt-2 opacity-70">Cantidad de datos por unidad de tiempo.</p>
+                    <p class="text-xs font-bold uppercase text-on-surface-variant mb-3"><span class="tooltip-term">Throughput<span class="tooltip-popup"><span class="tooltip-title">📌 Throughput</span>Tasa de transferencia efectiva, la cantidad de datos procesados por unidad de tiempo (MB/s, Gbps).</span></span></p>
+                    <div class="metric-counter" data-target="3500" data-unit="MB/s" data-bar="88" data-bar-color="#346384">
+                        <span class="counter-value">0</span><span class="counter-unit">MB/s</span>
+                    </div>
+                    <div class="counter-bar"><div class="counter-bar-fill" style="background: linear-gradient(90deg, #346384, #9eccf1);"></div></div>
+                    <p class="text-xs mt-3 opacity-70">Transferencia típica de un SSD NVMe Gen4.</p>
                 </div>
                 <div class="bg-surface-container p-6 rounded-2xl border-l-4 border-on-tertiary-container hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    <p class="text-xs font-bold uppercase text-on-surface-variant mb-1">Utilización</p>
-                    <h4 class="text-2xl font-bold text-primary">Uso de CPU</h4>
-                    <p class="text-xs mt-2 opacity-70">Porcentaje de tiempo que la CPU gestiona E/S.</p>
+                    <p class="text-xs font-bold uppercase text-on-surface-variant mb-3">Utilización CPU</p>
+                    <div class="metric-counter" data-target="15" data-unit="%" data-bar="15" data-bar-color="#2d9f91">
+                        <span class="counter-value">0</span><span class="counter-unit">%</span>
+                    </div>
+                    <div class="counter-bar"><div class="counter-bar-fill" style="background: linear-gradient(90deg, #005048, #6fd8c8);"></div></div>
+                    <p class="text-xs mt-3 opacity-70">Uso de CPU gestionando E/S con DMA activo.</p>
                 </div>
                 <div class="bg-surface-container p-6 rounded-2xl border-l-4 border-primary hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    <p class="text-xs font-bold uppercase text-on-surface-variant mb-1">Overhead</p>
-                    <h4 class="text-2xl font-bold text-primary">Carga Extra</h4>
-                    <p class="text-xs mt-2 opacity-70">Costo de gestión del sistema operativo.</p>
+                    <p class="text-xs font-bold uppercase text-on-surface-variant mb-3"><span class="tooltip-term">Overhead<span class="tooltip-popup"><span class="tooltip-title">📌 Overhead</span>Carga computacional adicional introducida por el sistema operativo al gestionar operaciones de E/S (cambios de contexto, copia de buffers, etc).</span></span></p>
+                    <div class="metric-counter" data-target="4" data-unit="μs" data-bar="30" data-bar-color="#0b2b3b">
+                        <span class="counter-value">0</span><span class="counter-unit">μs</span>
+                    </div>
+                    <div class="counter-bar"><div class="counter-bar-fill" style="background: linear-gradient(90deg, #0b2b3b, #466274);"></div></div>
+                    <p class="text-xs mt-3 opacity-70">Overhead por cambio de contexto en Linux.</p>
                 </div>
             </div>
         </section>

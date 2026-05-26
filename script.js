@@ -100,4 +100,90 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // ========================================
+    // 5. CONTADORES ANIMADOS
+    // ========================================
+    function animateCounter(counterEl) {
+        const valueEl = counterEl.querySelector('.counter-value');
+        const target = parseInt(counterEl.dataset.target, 10);
+        const barPercent = parseInt(counterEl.dataset.bar, 10);
+        const barFill = counterEl.closest('.bg-surface-container')?.querySelector('.counter-bar-fill');
+        
+        if (!valueEl || isNaN(target)) return;
+
+        const duration = 1800; // ms
+        const startTime = performance.now();
+
+        function easeOutExpo(t) {
+            return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+        }
+
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easedProgress = easeOutExpo(progress);
+            const currentValue = Math.round(easedProgress * target);
+
+            valueEl.textContent = currentValue.toLocaleString();
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+
+        requestAnimationFrame(update);
+
+        // Animar la barra de progreso
+        if (barFill && !isNaN(barPercent)) {
+            setTimeout(() => {
+                barFill.style.width = barPercent + '%';
+            }, 100);
+        }
+    }
+
+    // Observer para los contadores
+    const metricsGrid = document.getElementById('metrics-grid');
+    if (metricsGrid) {
+        let countersAnimated = false;
+        const metricsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !countersAnimated) {
+                    countersAnimated = true;
+                    const counters = metricsGrid.querySelectorAll('.metric-counter');
+                    counters.forEach((counter, index) => {
+                        // Escalonar las animaciones
+                        setTimeout(() => {
+                            animateCounter(counter);
+                        }, index * 200);
+                    });
+                    metricsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        metricsObserver.observe(metricsGrid);
+    }
+
+    // ========================================
+    // 6. DIAGRAMA INTERACTIVO DE CAPAS
+    // ========================================
+    const layerDiagram = document.getElementById('layer-diagram');
+    if (layerDiagram) {
+        const layerItems = layerDiagram.querySelectorAll('.layer-item');
+
+        layerItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Cerrar todas las capas
+                layerItems.forEach(li => li.classList.remove('active'));
+                
+                // Si no estaba activa, abrirla
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    }
 });
